@@ -1,5 +1,6 @@
 package com.example.namescoreapp;
 
+import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -8,6 +9,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
+
+	public final static String EXTRA_MYNAME = "com.example.namescoreapp.MYNAME";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +48,10 @@ public class MainActivity extends AppCompatActivity {
 			*/
 
 		} else {
-
+			// 次の画面へ
+			Intent intent = new Intent(this, MyResult.class);
+			intent.putExtra(EXTRA_MYNAME, myName);
+			startActivity(intent);
 		}
 
 	}
