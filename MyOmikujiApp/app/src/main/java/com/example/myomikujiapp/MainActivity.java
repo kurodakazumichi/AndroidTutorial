@@ -21,7 +21,9 @@ public class MainActivity extends AppCompatActivity {
 		TextView myTextView = (TextView) findViewById(R.id.myTextView);
 
 		String[] results = {
-				"大吉", "吉", "凶"
+				getString(R.string.result_daikichi),
+				getString(R.string.result_kichi),
+				getString(R.string.result_kyou),
 		};
 
 		// 乱数の生成

@@ -1,3 +1,9 @@
 <resources>
-    <string name="app_name">MyOmikujiApp</string>
+    <string name="app_name">おみくじアプリ</string>
+    <string name="omikuji_label">あなたの運勢は...</string>
+    <string name="result_label">---</string>
+    <string name="button_label">おみくじを引く</string>
+    <string name="result_daikichi">大吉</string>
+    <string name="result_kichi">吉</string>
+    <string name="result_kyou">凶</string>
 </resources>

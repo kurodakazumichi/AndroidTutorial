@@ -14,7 +14,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="24dp"
-        android:text="あなたの運勢は…"
+        android:text="@string/omikuji_label"
         android:textSize="24sp"/>
 
     <TextView
@@ -22,7 +22,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="24dp"
-        android:text="---"
+        android:text="@string/result_label"
         android:textSize="64sp"
         android:textStyle="bold"/>
 
@@ -30,5 +30,5 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="getOmikuji"
-        android:text="おみくじを引く"/>
+        android:text="@string/button_label"/>
 </LinearLayout>
