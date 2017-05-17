@@ -27,8 +27,8 @@
         android:textStyle="bold"/>
 
     <Button
-        android:id="@+id/getOmikuji"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:onClick="getOmikuji"
         android:text="おみくじを引く"/>
 </LinearLayout>
