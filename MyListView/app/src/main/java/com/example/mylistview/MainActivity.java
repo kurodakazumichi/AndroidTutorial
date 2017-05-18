@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.provider.LiveFolders;
+import android.support.v4.app.ShareCompat;
 import android.support.v4.view.LayoutInflaterCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,10 +12,12 @@ import android.support.v7.widget.ListViewCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.StringTokenizer;
@@ -41,6 +44,21 @@ public class MainActivity extends AppCompatActivity {
 		// リストビューに表示
 		myListView.setEmptyView(findViewById(R.id.emptyView));
 		myListView.setAdapter(adapter);
+
+		// リストアイテムがタップされたときのイベント
+		myListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+			@Override
+			public void onItemClick(
+					AdapterView<?> parent, // adapter
+					View view,             // タップされたView
+					int position,          // 何番目
+					long id)               // ViewのID
+			{
+				TextView name = (TextView)view.findViewById(R.id.name);
+				Toast.makeText(MainActivity.this, Integer.toString(position) + ":" + name.getText().toString(), Toast.LENGTH_SHORT).show();
+				name.setText("Tapped");
+			}
+		});
 	}
 
 	public class UserAdapter extends ArrayAdapter<User> {
