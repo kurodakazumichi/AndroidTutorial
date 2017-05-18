@@ -2,9 +2,11 @@ package com.example.mymemoapp;
 
 import android.content.ContentUris;
 import android.content.ContentValues;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -40,8 +42,18 @@ public class FromActivity extends AppCompatActivity {
 
 		if (memoId == 0) {
 			// new memo
+			if(getSupportActionBar() != null) {
+				getSupportActionBar().setTitle("New memo");
+			}
+
+			updatedText.setText("updated:----");
+
+
 		} else {
 			// show memo
+			if(getSupportActionBar() != null) {
+				getSupportActionBar().setTitle("Show memo");
+			}
 			Uri uri = ContentUris.withAppendedId(
 					MemoContentProvider.CONTENT_URI,
 					memoId
@@ -72,13 +84,39 @@ public class FromActivity extends AppCompatActivity {
 	}
 
 	@Override
+	public boolean onPrepareOptionsMenu(Menu menu)
+	{
+		MenuItem deleteItem = menu.findItem(R.id.action_delete);
+		if(memoId == 0L) deleteItem.setVisible(false);
+		return super.onPrepareOptionsMenu(menu);
+	}
+
+	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.menu_form, menu);
 		return true;
 	}
 
 	private void deleteMemo(){
-
+		new AlertDialog.Builder(this)
+				.setTitle("Delete Memo")
+				.setMessage("Are you sure?")
+				.setNegativeButton("CANCEL", null)
+				.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						Uri uri = ContentUris.withAppendedId(
+								MemoContentProvider.CONTENT_URI,
+								memoId
+						);
+						getContentResolver().delete(
+								uri,
+								MemoContract.Memos._ID + " = ?",
+								new String[] { Long.toString(memoId)}
+						);
+						finish();
+					}
+				}).show();
 	}
 
 	private void saveMemo() {
@@ -101,6 +139,10 @@ public class FromActivity extends AppCompatActivity {
 
 			if(memoId == 0L) {
 				// new memo
+				getContentResolver().insert(
+						MemoContentProvider.CONTENT_URI,
+						values
+				);
 			} else {
 				// updated
 				Uri uri = ContentUris.withAppendedId(
@@ -113,9 +155,9 @@ public class FromActivity extends AppCompatActivity {
 						MemoContract.Memos._ID + " = ?",
 						new String[] { Long.toString(memoId)}
 				);
-
-				finish();
 			}
+
+			finish();
 		}
 	}
 
