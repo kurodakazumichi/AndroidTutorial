@@ -30,6 +30,11 @@ public class MyQuiz extends AppCompatActivity {
 	private int currentQuiz = 0;
 	private int score = 0;
 
+	/**
+	 * クイズデータのロード、ビューの取得、クイズデータのセットを行います。
+	 *
+	 * @param savedInstanceState
+	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -40,14 +45,36 @@ public class MyQuiz extends AppCompatActivity {
 		setQuiz();
 	}
 
-	public void checkAnswer(View view)
-	{
+	/**
+	 * クイズアプリを最初の状態にします。
+	 */
+	@Override
+	public void onResume() {
+		super.onResume();
+		reset();
+	}
+
+	/**
+	 * スコア、現在のクイズ番号、各種Viewを初期状態にします。
+	 */
+	private void reset() {
+		currentQuiz = 0;
+		score = 0;
+		setQuiz();
+		nextButton.setText("Next");
+	}
+
+	/**
+	 * 答えが選択された時に呼ばれる。
+	 * 成否の判定を行い、次の問題を設定する。
+	 * @param view
+	 */
+	public void checkAnswer(View view) {
 		Button clickedButton = (Button) view;
 
 		String clickedAnswer = clickedButton.getText().toString();
 
-		if(clickedAnswer.equals(quizSet.get(currentQuiz)[1]))
-		{
+		if (clickedAnswer.equals(quizSet.get(currentQuiz)[1])) {
 			clickedButton.setText("〇 " + clickedAnswer);
 			score++;
 		} else {
@@ -61,27 +88,19 @@ public class MyQuiz extends AppCompatActivity {
 		// クイズを進める
 		currentQuiz++;
 
-		if(currentQuiz == quizSet.size()){
+		if (currentQuiz == quizSet.size()) {
 			nextButton.setText("Check result");
 		}
 
 	}
-	private void showScore()
-	{
-		scoreText.setText("Score: " + score + "/" + quizSet.size());
-	}
 
-	private void setEnableOfAnsers(boolean enable)
-	{
-		a0Button.setEnabled(enable);
-		a1Button.setEnabled(enable);
-		a2Button.setEnabled(enable);
-	}
-
-	public void goNext(View view)
-	{
-		if (currentQuiz == quizSet.size())
-		{
+	/**
+	 * NEXTボタンが押されたときに呼ばれる。
+	 * 次の問題を表示する、最後の問題の場合は結果ページへ遷移する。
+	 * @param view
+	 */
+	public void goNext(View view) {
+		if (currentQuiz == quizSet.size()) {
 			Intent intent = new Intent(this, MyResult.class);
 			intent.putExtra(EXTRA_MYSCORE, score + "/" + quizSet.size());
 			startActivity(intent);
@@ -90,33 +109,45 @@ public class MyQuiz extends AppCompatActivity {
 		}
 	}
 
-	@Override
-	public void onResume(){
-		super.onResume();
-		nextButton.setText("Next");
-		currentQuiz = 0;
-		score = 0;
-		setQuiz();
+	/**
+	 * 現在のスコアを表示する。
+	 */
+	private void showScore() {
+		scoreText.setText("Score: " + score + "/" + quizSet.size());
 	}
 
-	private void getViews()
-	{
-		scoreText = (TextView)findViewById(R.id.scoreText);
-		quizText = (TextView)findViewById(R.id.quizText);
-		a0Button = (Button)findViewById(R.id.a0Button);
-		a1Button = (Button)findViewById(R.id.a1Button);
-		a2Button = (Button)findViewById(R.id.a2Button);
-		nextButton = (Button)findViewById(R.id.nextButton);
+	/**
+	 * 答えボタンの状態を一括で設定する。
+	 * @param enable
+	 */
+	private void setEnableOfAnsers(boolean enable) {
+		a0Button.setEnabled(enable);
+		a1Button.setEnabled(enable);
+		a2Button.setEnabled(enable);
 	}
 
-	private void setQuiz()
-	{
+	/**
+	 * 各種Viewを取得し、メンバー変数に保存する。
+	 * 一度だけ呼び出す。
+	 */
+	private void getViews() {
+		scoreText = (TextView) findViewById(R.id.scoreText);
+		quizText = (TextView) findViewById(R.id.quizText);
+		a0Button = (Button) findViewById(R.id.a0Button);
+		a1Button = (Button) findViewById(R.id.a1Button);
+		a2Button = (Button) findViewById(R.id.a2Button);
+		nextButton = (Button) findViewById(R.id.nextButton);
+	}
+
+	/**
+	 * 現在のクイズの質問と答えを表示する。
+	 */
+	private void setQuiz() {
 		quizText.setText(quizSet.get(currentQuiz)[0]);
 
 		ArrayList<String> answers = new ArrayList<String>();
 
-		for(int i = 1; i <= 3; ++i)
-		{
+		for (int i = 1; i <= 3; ++i) {
 			answers.add(quizSet.get(currentQuiz)[i]);
 		}
 		Collections.shuffle(answers);
@@ -129,6 +160,9 @@ public class MyQuiz extends AppCompatActivity {
 		showScore();
 	}
 
+	/**
+	 * クイズデータをロードする。
+	 */
 	private void loadQuizSet() {
 		InputStream inputStream = null;
 		BufferedReader bufferedReader = null;
