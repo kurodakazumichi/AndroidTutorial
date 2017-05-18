@@ -71,8 +71,24 @@ public class FromActivity extends AppCompatActivity {
 		return true;
 	}
 
+	private void deleteMemo(){
+
+	}
+
+	private void saveMemo() {
+
+	}
+
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
+		switch(item.getItemId()){
+			case R.id.action_delete:
+				deleteMemo();
+				break;
+			case R.id.action_save:
+				saveMemo();
+				break;
+		}
 		return super.onOptionsItemSelected(item);
 	}
 }
