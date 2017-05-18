@@ -17,11 +17,13 @@ public class MemoOpenHelper extends SQLiteOpenHelper {
 	public static final String CREATE_TABLE = String.format(
 			"create table %s (" +
 					"%s integer primary key autoincrement, " +
+					"%s text," +
 					"%s text, " +
 					"%s datetime default current_timestamp," +
-					"%s updated datetime default durrent_timestamp",
+					"%s datetime default current_timestamp)",
 			MemoContract.Memos.TABLE_NAME,
 			MemoContract.Memos._ID,
+			MemoContract.Memos.COL_TITLE,
 			MemoContract.Memos.COL_BODY,
 			MemoContract.Memos.COL_CREATED,
 			MemoContract.Memos.COL_UPDATED
