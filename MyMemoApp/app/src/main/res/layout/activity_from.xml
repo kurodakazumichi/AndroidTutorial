@@ -15,6 +15,7 @@
         android:layout_height="wrap_content"/>
 
     <EditText
+        android:gravity="top"
         android:layout_weight="1"
         android:id="@+id/bodyText"
         android:inputType="textShortMessage|textMultiLine"
